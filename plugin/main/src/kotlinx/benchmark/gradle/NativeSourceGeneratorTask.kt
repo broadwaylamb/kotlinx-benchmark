@@ -130,7 +130,8 @@ abstract class NativeSourceGeneratorWorker : WorkAction<NativeSourceGeneratorWor
             storageManager,
             Builtins,
             versionSpec,
-            null,
+            emptySet(),
+            emptySet(),
             emptyList()
         )
 
