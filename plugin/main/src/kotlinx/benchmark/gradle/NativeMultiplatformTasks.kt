@@ -118,7 +118,7 @@ fun Project.createNativeBenchmarkExecTask(
         val executableFile = linkTask.outputFile.get()
         executable = executableFile.absolutePath
         this.config = config
-        this.workingDir = target.workingDir?.let { File(it) }
+        this.workingDir = target.workingDir?.let { File(it) }?.also { it.mkdirs() }
         this.benchProgressPath = createTempFile("bench", ".txt").absolutePath
 
         onlyIf { executableFile.exists() }
@@ -126,7 +126,7 @@ fun Project.createNativeBenchmarkExecTask(
 
         dependsOn(linkTask)
 
-        reportFile = setupReporting(target, config)
+        val reportFile = setupReporting(target, config)
         configFile = writeParameters(target.name, reportFile, traceFormat(), config)
 
         doFirst {
@@ -144,21 +144,20 @@ open class NativeBenchmarkExec() : DefaultTask() {
     @Input
     lateinit var executable: String
 
+    @InputFile
+    @Optional
     var workingDir: File? = null
 
-    @Input
+    @InputFile
     lateinit var configFile: File
 
     @Input
     lateinit var config: BenchmarkConfiguration
 
-    @Input
-    lateinit var reportFile: File
-
-    @Input
+    @Internal
     lateinit var benchsDescriptionDir: File
 
-    @Input
+    @Internal
     lateinit var benchProgressPath: String
 
     private fun execute(args: Collection<String>) {

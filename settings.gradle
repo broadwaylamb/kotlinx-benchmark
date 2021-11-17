@@ -7,8 +7,6 @@ pluginManagement {
     }
 }
 
-enableFeaturePreview('GRADLE_METADATA')
-
 rootProject.name = 'kotlinx-benchmark'
 
 includeBuild("plugin")
