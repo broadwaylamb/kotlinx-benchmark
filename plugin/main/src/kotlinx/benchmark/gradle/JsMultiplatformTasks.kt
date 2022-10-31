@@ -34,7 +34,7 @@ private fun Project.createJsBenchmarkCompileTask(target: JsBenchmarkTarget): Kot
         sourceSet.kotlin.setSrcDirs(files("$benchmarkBuildDir/sources"))
         sourceSet.resources.setSrcDirs(files())
         sourceSet.dependencies {
-            implementation(compilation.compileDependencyFiles)
+            implementation(files(provider { compilation.compileDependencyFiles }))
             implementation(compilation.output.allOutputs)
             implementation(npm("benchmark", "*"))
             runtimeOnly(npm("source-map-support", "*"))

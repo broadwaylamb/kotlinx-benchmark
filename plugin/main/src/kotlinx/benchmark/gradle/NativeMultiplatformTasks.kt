@@ -71,7 +71,7 @@ private fun Project.createNativeBenchmarkCompileTask(target: NativeBenchmarkTarg
         this.kotlinOptions.freeCompilerArgs = compilation.kotlinOptions.freeCompilerArgs
         sourceSet.kotlin.setSrcDirs(files("$benchmarkBuildDir/sources"))
         sourceSet.dependencies {
-            implementation(compilation.compileDependencyFiles)
+            implementation(files(provider { compilation.compileDependencyFiles }))
             implementation(compilation.output.allOutputs)
         }
     }
