@@ -43,6 +43,7 @@ kotlin {
 
         jsMain {
             jsIrMain.dependsOn(it)
+            jsIrBuiltInMain.dependsOn(it)
         }
 
         nativeMain {
